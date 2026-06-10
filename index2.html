@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Magical Spell Generator</title>
+    <style>
+      body {
+        font-family: Georgia, serif;
+        background: #1a1a2e;
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      h1 {
+        color: #f1c40f;
+      }
+      #spellArea {
+        width: 400px;
+        min-height: 150px;
+        border: 3px solid #8e44ad;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 20px;
+        margin: 20px 0;
+        background: #16213e;
+      }
+      button {
+        background: #8e44ad;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 10px;
+      }
+      #ingredientsList {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: 15px;
+      }
+      #ingredientsList li {
+        background: #0f3460;
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #e94560;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to the Magical Spell Generator!</h1>
+    <div id="spellArea">Your spell will appear here...</div>
+    <button id="generateButton">Generate Spell</button>
+    <button id="resetButton">Reset</button>
+    <ul id="ingredientsList">
+      <li>DragonScale</li>
+      <li>PhoenixFeather</li>
+      <li>UnicornHorn</li>
+    </ul>
+
+    <script>
+      const generateButton = document.getElementById("generateButton");
+      const resetButton = document.getElementById("resetButton");
+      const spellArea = document.getElementById("spellArea");
+      const ingredients = document
+        .getElementById("ingredientsList")
+        .getElementsByTagName("li");
+      const DEFAULT_TEXT = "Your spell will appear here...";
+      const DEFAULT_COLOR = "#16213e";
+
+      generateButton.onclick = () => {
+        generateButton.disabled = true;
+        const selectedIngredient =
+          ingredients[Math.floor(Math.random() * ingredients.length)]
+            .textContent;
+        spellArea.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 30%)`;
+        let count = 3;
+        spellArea.textContent = count;
+        const timer = setInterval(() => {
+          count--;
+          if (count > 0) spellArea.textContent = count;
+          else {
+            clearInterval(timer);
+            spellArea.textContent = `✨ Here you go! Your spell uses: ${selectedIngredient} ✨`;
+            generateButton.disabled = false;
+          }
+        }, 1000);
+      };
+
+      resetButton.onclick = () => {
+        spellArea.textContent = DEFAULT_TEXT;
+        spellArea.style.backgroundColor = DEFAULT_COLOR;
+        generateButton.disabled = false;
+      };
+    </script>
+  </body>
+</html>
